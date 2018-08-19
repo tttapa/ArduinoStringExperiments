@@ -7,6 +7,8 @@ using namespace std;
 
 #include "testmalloc.h"
 
+String returnAsString(const char *cstr) { return {cstr}; }
+
 int main() {
   cout << "Start" << endl;
   void *mem1 = testmalloc(8);
@@ -55,10 +57,22 @@ int main() {
 
   cout << endl << endl;
 
-  String res;
   {
-    String s = std::move(String("Hello, ") + String("World!"));
-    res = std::move(s);
+    String res;
+    {
+      String temp = String("Hello, ") + String("World!");
+      res = temp;
+    }
+    printf("String res = \"%s\"\n", res.c_str());
   }
-  printf("String res = \"%s\"\n", res.c_str());
+
+  cout << endl << endl;
+
+  {
+    String reserverd;
+    reserverd.reserve(32);
+    reserverd = "Test";
+    reserverd += returnAsString("+returnAsString");
+    reserverd += String("+") + "More" + "+";
+  }
 }

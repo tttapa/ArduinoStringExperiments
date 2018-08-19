@@ -19,7 +19,6 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <stdio.h>
 #include "WString.h"
 #include "testmalloc.h"
 
@@ -29,9 +28,9 @@
 
 String::String(const char *cstr) : number(counter++)
 {
+    printf("Construct String %lu with cstring \"%s\":\n", number, cstr);
 	init();
 	if (cstr) copy(cstr, strlen(cstr));
-    printf("Construct String %lu with cstring \"%s\":\n", number, cstr);
 }
 
 String::String(const String &value) : number(counter++)
@@ -195,7 +194,7 @@ void String::move(String &rhs)
 			rhs.len = 0;
 			return;
 		} else {
-            printf("Move String %lu \"%s\":\n", number, c_str());
+            printf("Move String %lu \"%s\" to String %lu \"%s\":\n", rhs.number, rhs.c_str(), number, c_str());
 			testfree(buffer);
             printfreelist();
 		}
@@ -212,7 +211,8 @@ void String::move(String &rhs)
 String & String::operator = (const String &rhs)
 {
 	if (this == &rhs) return *this;
-	
+
+    printf("Assign String %lu \"%s\" to String %lu \"%s\":\n", rhs.number, rhs.c_str(), number, c_str());
 	if (rhs.buffer) copy(rhs.buffer, rhs.len);
 	else invalidate();
 	

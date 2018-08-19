@@ -28,6 +28,8 @@
 #include <string.h>
 #include <cstring>
 
+#include <stdio.h>
+
 // When compiling programs with this class, the following gcc parameters
 // dramatically increase performance and memory (RAM) efficiency, typically
 // with little or no increase in code size.
@@ -207,16 +209,15 @@ protected:
 class StringSumHelper : public String
 {
 public:
-	StringSumHelper(const String &s) : String(s) {}
-	StringSumHelper(const char *p) : String(p) {}
-	StringSumHelper(char c) : String(c) {}
-	StringSumHelper(unsigned char num) : String(num) {}
-	StringSumHelper(int num) : String(num) {}
-	StringSumHelper(unsigned int num) : String(num) {}
-	StringSumHelper(long num) : String(num) {}
-	StringSumHelper(unsigned long num) : String(num) {}
-	StringSumHelper(float num) : String(num) {}
-	StringSumHelper(double num) : String(num) {}
+	StringSumHelper(const String &s) : String(s) {
+        printf("StringSumHelper %lu\n", number);
+    }
+	StringSumHelper(const char *p) : String(p) {
+        printf("StringSumHelper %lu\n", number);
+    }
+	StringSumHelper(char c) : String(c) {
+        printf("StringSumHelper %lu\n", number);
+    }
 };
 
 #endif  // __cplusplus

@@ -5,6 +5,7 @@
         "stdlib.h": "c",
         "*.tcc": "cpp",
         "system_error": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "iostream": "cpp"
     }
 }
