@@ -271,6 +271,15 @@ testfree(void *p)
 
 #include <stdio.h>
 
+#define ANSI_RED "\e[0;31m"
+#define ANSI_GREEN "\e[0;32m"
+#define ANSI_YELLOW "\e[0;33m"
+#define ANSI_RESET "\e[0m"
+
+#define RED(x) (ANSI_RED x ANSI_RESET)
+#define GREEN(x) (ANSI_GREEN x ANSI_RESET)
+#define YELLOW(x) (ANSI_YELLOW x ANSI_RESET)
+
 void
 printfreelist(void)
 {
@@ -282,16 +291,16 @@ printfreelist(void)
         size_t fullEnd = (char *) fp1 - buffer;
         size_t loc;
         for (loc = prevEnd; loc < fullEnd; loc += incr) {
-            printf("X");
+            printf(RED("X"));
         }
 
         size_t freeStart = (char *) &(fp1->nx) - buffer;
         size_t len = fp1->sz;
         size_t freeEnd = freeStart + len;
         for (loc = fullEnd; loc < freeStart; loc += incr)
-            printf("R");
+            printf(YELLOW("R"));
         for (loc = freeStart; loc < freeEnd; loc += incr) {
-            printf("·");
+            printf(GREEN("·"));
         }
 
         prevEnd = freeEnd;
@@ -300,7 +309,7 @@ printfreelist(void)
     size_t end = __brkval - buffer;
     size_t loc;
     for (loc = prevEnd; loc < end; loc += incr) {
-        printf("X");
+        printf(RED("X"));
     }
 
     printf("\n");
