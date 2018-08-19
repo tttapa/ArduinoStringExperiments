@@ -1,4 +1,5 @@
-// g++ -g -Wall -std=c++14 -DFORUM main.cpp WString.cpp malloc.c realloc.c -o main && ./main
+// g++ -g -Wall -std=c++14 -DFORUM main.cpp WString.cpp malloc.c realloc.c -o
+// main && ./main
 
 #include "WString.h"
 
@@ -11,21 +12,27 @@ String returnAsString(const char *cstr) { return {cstr}; }
 
 int main() {
   {
-    String res;
-    {
-      String temp = String("Hello, ") + String("World!");
-      res = temp;
-    }
-    printf("String res = \"%s\"\n", res.c_str());
+    String res = String("Hello, ") + "World" + '!';
+    printf("Done: \"%s\"\n", res.c_str());
   }
 
-  cout << endl << endl;
+  cout << endl;
+
+  {
+    String res;
+    {
+      String temp = String("Hello, ") + "World" + '!';
+      res = temp;
+    }
+    printf("Done: \"%s\"\n", res.c_str());
+  }
+
+  cout << endl;
 
   {
     String reserverd;
     reserverd.reserve(32);
-    reserverd = "Test";
-    reserverd += returnAsString("+returnAsString");
-    reserverd += String("+") + "More" + "+";
+    reserverd = "Hello, " + returnAsString("World") + '!';
+    printf("Done: \"%s\"\n", reserverd.c_str());
   }
 }
