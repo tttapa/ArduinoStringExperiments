@@ -1,5 +1,4 @@
-// g++ -g -Wall -std=c++14 -DFORUM main.cpp WString.cpp malloc.c realloc.c -o
-// main && ./main
+// g++ -g -Wall -std=c++14 -DFORUM main.cpp WString.cpp malloc.cpp realloc.cpp -o main && ./main
 
 #include "WString.h"
 
