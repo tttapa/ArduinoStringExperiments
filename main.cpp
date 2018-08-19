@@ -32,7 +32,7 @@ int main() {
   {
     String reserverd;
     reserverd.reserve(32);
-    reserverd = "Hello, " + returnAsString("World") + '!';
+    reserverd = String("Hello, ") + returnAsString("World") + '!';
     printf("Done: \"%s\"\n", reserverd.c_str());
   }
 }
