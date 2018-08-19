@@ -50,14 +50,11 @@
  
 /* May be changed by the user only before the first malloc() call.  */
 
-const size_t SIZE = 8*16;
 char buffer[SIZE];
 
 size_t __malloc_margin = 0;
 char *__malloc_heap_start = &buffer[0];
 char *__malloc_heap_end = &buffer[SIZE];
-
-#define STACK_POINTER() (buffer + SIZE)
 
 char *__brkval;
 struct __freelist *__flp;

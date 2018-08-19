@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "cctype": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "stdlib.h": "c",
+        "*.tcc": "cpp",
+        "system_error": "cpp",
+        "type_traits": "cpp"
     }
 }

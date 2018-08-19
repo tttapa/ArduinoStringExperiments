@@ -42,3 +42,8 @@ extern struct __freelist *__flp; /* freelist pointer (head of freelist) */
 extern size_t __malloc_margin;	/* user-changeable before the first malloc() */
 extern char *__malloc_heap_start;
 extern char *__malloc_heap_end;
+
+extern char buffer[];
+
+#define SIZE 8*32
+#define STACK_POINTER() (buffer + SIZE)

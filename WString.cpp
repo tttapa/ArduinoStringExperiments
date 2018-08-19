@@ -19,38 +19,42 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#include <stdio.h>
 #include "WString.h"
+#include "testmalloc.h"
 
 /*********************************************/
 /*  Constructors                             */
 /*********************************************/
 
-String::String(const char *cstr)
+String::String(const char *cstr) : number(counter++)
 {
 	init();
 	if (cstr) copy(cstr, strlen(cstr));
+    printf("Construct String %lu with cstring \"%s\":\n", number, cstr);
 }
 
-String::String(const String &value)
+String::String(const String &value) : number(counter++)
 {
+    printf("Construct String %lu with String %lu \"%s\":\n", number, value.number, value.c_str());
 	init();
 	*this = value;
 }
 
 #if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
-String::String(String &&rval)
+String::String(String &&rval) : number(counter++)
 {
 	init();
 	move(rval);
 }
-String::String(StringSumHelper &&rval)
+String::String(StringSumHelper &&rval) : number(counter++)
 {
 	init();
 	move(rval);
 }
 #endif
 
-String::String(char c)
+String::String(char c) : number(counter++)
 {
 	init();
 	char buf[2];
@@ -119,7 +123,9 @@ String::String(double value, unsigned char decimalPlaces)
 
 String::~String()
 {
-	free(buffer);
+    printf("Destructed and freed String %lu \"%s\":\n", number, c_str());
+	testfree(buffer);
+    printfreelist();
 }
 
 /*********************************************/
@@ -135,7 +141,7 @@ inline void String::init(void)
 
 void String::invalidate(void)
 {
-	if (buffer) free(buffer);
+	if (buffer) testfree(buffer);
 	buffer = NULL;
 	capacity = len = 0;
 }
@@ -152,7 +158,10 @@ unsigned char String::reserve(unsigned int size)
 
 unsigned char String::changeBuffer(unsigned int maxStrLen)
 {
-	char *newbuffer = (char *)realloc(buffer, maxStrLen + 1);
+	char *newbuffer = (char *)testrealloc(buffer, maxStrLen + 1);
+    printf("Reallocate buffer for String %lu \"%s\":\n", number, c_str());
+    printfreelist();
+
 	if (newbuffer) {
 		buffer = newbuffer;
 		capacity = maxStrLen;
@@ -186,7 +195,9 @@ void String::move(String &rhs)
 			rhs.len = 0;
 			return;
 		} else {
-			free(buffer);
+            printf("Move String %lu \"%s\":\n", number, c_str());
+			testfree(buffer);
+            printfreelist();
 		}
 	}
 	buffer = rhs.buffer;
@@ -241,6 +252,7 @@ unsigned char String::concat(const String &s)
 
 unsigned char String::concat(const char *cstr, unsigned int length)
 {
+    printf("Concat String %lu \"%s\" + \"%s\"\n", number, c_str(), cstr);
 	unsigned int newlen = len + length;
 	if (!cstr) return 0;
 	if (length == 0) return 1;
@@ -724,3 +736,7 @@ double String::toDouble(void) const
 	if (buffer) return atof(buffer);
 	return 0;
 }
+
+// Counter
+
+size_t String::counter = 0;

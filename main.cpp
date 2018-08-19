@@ -9,20 +9,20 @@ using namespace std;
 
 int main() {
   cout << "Start" << endl;
-  char *mem1 = (char *)testmalloc(8);
-  printf("Allocated 1: %lu\n", mem1 - buffer);
+  void *mem1 = testmalloc(8);
+  printf("Allocated 1: %lu\n", (char *)mem1 - buffer);
   printfreelist();
-  char *mem2 = (char *)testmalloc(8);
-  printf("Allocated 2: %lu\n", mem2 - buffer);
+  void *mem2 = testmalloc(8);
+  printf("Allocated 2: %lu\n", (char *)mem2 - buffer);
   printfreelist();
-  char *mem3 = (char *)testmalloc(8);
-  printf("Allocated 3: %lu\n", mem3 - buffer);
+  void *mem3 = testmalloc(8);
+  printf("Allocated 3: %lu\n", (char *)mem3 - buffer);
   printfreelist();
-  char *mem4 = (char *)testmalloc(8);
-  printf("Allocated 4: %lu\n", mem4 - buffer);
+  void *mem4 = testmalloc(8);
+  printf("Allocated 4: %lu\n", (char *)mem4 - buffer);
   printfreelist();
-  char *mem5 = (char *)testmalloc(8);
-  printf("Allocated 5: %lu\n", mem5 - buffer);
+  void *mem5 = testmalloc(8);
+  printf("Allocated 5: %lu\n", (char *)mem5 - buffer);
   printfreelist();
   testfree(mem2);
   printf("Free 2\n");
@@ -36,7 +36,29 @@ int main() {
   testfree(mem5);
   printf("Free 5\n");
   printfreelist();
+
+  void *mem6 = testmalloc(8);
+  printf("Allocated 6: %lu\n", (char *)mem6 - buffer);
+  printfreelist();
+
+  mem6 = testrealloc(mem6, 16);
+  printf("Reallocated 6: %lu\n", (char *)mem6 - buffer);
+  printfreelist();
+
   testfree(mem4);
   printf("Free 4\n");
   printfreelist();
+
+  testfree(mem6);
+  printf("Free 6\n");
+  printfreelist();
+
+  cout << endl << endl;
+
+  String res;
+  {
+    String s = std::move(String("Hello, ") + String("World!"));
+    res = std::move(s);
+  }
+  printf("String res = \"%s\"\n", res.c_str());
 }

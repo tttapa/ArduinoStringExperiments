@@ -196,9 +196,12 @@ protected:
 
 	// copy and move
 	String & copy(const char *cstr, unsigned int length);
-       #if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
+    #if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
 	void move(String &rhs);
 	#endif
+
+    static size_t counter;
+    const size_t number;
 };
 
 class StringSumHelper : public String
