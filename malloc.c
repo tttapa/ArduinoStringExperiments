@@ -268,10 +268,21 @@ testfree(void *p)
 
 #include <stdio.h>
 
+#ifdef FORUM
+
+#define ANSI_RED "[color=red]"
+#define ANSI_GREEN "[color=green]"
+#define ANSI_YELLOW "[color=orange]"
+#define ANSI_RESET "[/color]"
+
+#else
+
 #define ANSI_RED "\e[0;31m"
 #define ANSI_GREEN "\e[0;32m"
 #define ANSI_YELLOW "\e[0;33m"
 #define ANSI_RESET "\e[0m"
+
+#endif
 
 #define RED(x) (ANSI_RED x ANSI_RESET)
 #define GREEN(x) (ANSI_GREEN x ANSI_RESET)
